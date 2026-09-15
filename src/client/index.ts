@@ -117,7 +117,7 @@ const CSS = [
   // 因此宽度变化只会向左生长——右缘天然固定，邻居变化时实时重排。
   '.pb-entry{--pb-ease:cubic-bezier(.22,1,.36,1);--pb-dur:.42s;--pb-stat:#a855f7;',
   // 收起时 5.5px 内边距 + 1px 边框 = 31×31 整（与高度相等，才是正方形）
-  'position:relative;display:inline-flex;align-items:center;gap:0;box-sizing:border-box;height:31px;padding:0 5.5px;transform-origin:100% 50%;',
+  'position:relative;display:inline-flex;align-items:center;gap:0;box-sizing:border-box;height:31px;padding:0 5.5px;',
   'border-radius:11px;cursor:pointer;overflow:hidden;user-select:none;vertical-align:middle;line-height:1;',
   'font-size:12.5px;font-weight:600;letter-spacing:.2px;color:#f3f7ff;border:1px solid transparent;',
   'background:linear-gradient(135deg,#080b14 0%,#0b0918 55%,#120a20 100%) padding-box,linear-gradient(112deg,#22d3ee 0%,#38bdf8 24%,#8b5cf6 58%,#e879f9 100%) border-box;',
@@ -155,8 +155,7 @@ const CSS = [
   '.pb-entry .pb-sat{transform-box:fill-box;transform-origin:center;animation:pb-sat 2.8s ease-in-out infinite}',
   '.pb-entry .pb-sat.s2{animation-delay:.45s}',
   '@keyframes pb-sat{0%,100%{transform:scale(.72);opacity:.5}50%{transform:scale(1.15);opacity:1}}',
-  '.pb-entry:hover .pb-orb{transform:scale(1.18) rotate(-6deg)}',
-  '.pb-entry:active .pb-orb{transform:scale(.9)}',
+  '.pb-entry:hover .pb-orb{transform:rotate(-6deg)}',
   '.pb-entry:hover .pb-core{animation-duration:1.1s}',
   '.pb-entry:hover .pb-orbit{stroke-dasharray:4 3;animation:pb-dash .8s linear infinite}',
   '.pb-entry .pb-lwrap{display:inline-block;overflow:hidden;max-width:0;margin-left:0;transition:max-width var(--pb-dur) var(--pb-ease),margin-left var(--pb-dur) var(--pb-ease)}',
@@ -176,9 +175,11 @@ const CSS = [
   // 展开态（悬停 / 键盘聚焦 / 面板开启）：padding 与圆角一起过渡成完整胶囊。
   // 圆角用 15.5px（= 高度/2，31px 盒子的胶囊半径），与邻居的 999px 渲染结果完全一致，
   // 但能真正参与补间——999px 会因为"超过半高即被 clamp"而在动画最后一帧才跳变。
-  '.pb-entry:hover,.pb-entry:focus-visible,.pb-entry.pb-on{padding:0 12px 0 10px;border-radius:15.5px;transform:translateY(-1.5px) scale(1.05);filter:brightness(1.12);',
+  // 悬停不再放大缩小（用户 2026-09-15 要求去掉）：只保留 1.5px 上浮 + 提亮 + 辉光，
+  // 让"收起/展开"成为唯一的形变动效，避免两种缩放叠加。
+  '.pb-entry:hover,.pb-entry:focus-visible,.pb-entry.pb-on{padding:0 12px 0 10px;border-radius:15.5px;transform:translateY(-1.5px);filter:brightness(1.12);',
   'box-shadow:0 0 0 1px rgba(168,85,247,.45),0 6px 26px rgba(124,58,237,.55),0 0 26px rgba(56,189,248,.40),0 0 30px rgba(232,121,249,.32),inset 0 0 18px rgba(124,58,237,.45)}',
-  '.pb-entry:active{transform:translateY(0) scale(.94);transition-duration:.06s;',
+  '.pb-entry:active{transform:translateY(0);transition-duration:.06s;',
   'box-shadow:0 1px 6px rgba(99,102,241,.4),inset 0 1px 0 rgba(255,255,255,.12)}',
   '.pb-entry:focus-visible{outline:2px solid rgba(168,85,247,.75);outline-offset:2px}',
   '.pb-entry.pb-on{box-shadow:0 0 0 1px rgba(168,85,247,.55),0 2px 16px rgba(124,58,237,.50),0 0 20px rgba(56,189,248,.28),inset 0 0 16px rgba(124,58,237,.45)}',
