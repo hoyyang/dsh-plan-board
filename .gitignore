@@ -1,0 +1,7 @@
+node_modules/
+*.tsbuildinfo
+*.tgz
+.DS_Store
+
+# lib/ 是构建产物，但必须随仓库提交：dsh plugin add github:hoyyang/dsh-plan-board
+# 要能免构建直接装（先例：dsh-improve-prompt）。改源码后跑 bash scripts/build.sh 重新生成再一起提交。

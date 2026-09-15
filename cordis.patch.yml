@@ -1,0 +1,6 @@
+# @dsh-external/dsh-plan-board bundle 装配清单（dev_scaffold_plugin 生成）。
+# 列入 profile bundles 时由官方 boot 层按此清单装配；勿删除本文件，
+# package.json 的 dsh.bundle.patch 指向它，缺了冷启动直接报错。
+- insert:
+    - id: dsh-plan-board
+      name: '@dsh-external/dsh-plan-board'
