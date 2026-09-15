@@ -30,6 +30,21 @@ dsh plugin --profile web remove @dsh-external/dsh-plan-board   # 卸载
 
 最低 `dsh >= 0.1.5-rc.1`（实测版本）。**零配置**：不需要 API Key，规划数据全部落在你自己的项目目录里。
 
+## 看看长什么样
+
+<p align="center">
+  <img alt="plan board panel" src="https://raw.githubusercontent.com/hoyyang/dsh-plan-board/main/assets/panel.png" width="420">
+</p>
+
+- **左**：面板（561×720）——计划 → 模块 → 任务三层思维导图，模块间紫色虚线是依赖，任务前的 `#N` 是拓扑执行序号，绿色=done；顶部横幅是 L7 越界拦截，底部是事件时间线（`status_changed` / `human_edit` / `guard_alert` 全量留痕）。
+- **入口按钮**：静止收成 31×31 圆角方形（左），悬停向左展开成完整胶囊（右）——右缘固定，右邻「⋯ 更多操作」不动。
+
+<p align="center">
+  <img alt="button collapsed" src="https://raw.githubusercontent.com/hoyyang/dsh-plan-board/main/assets/button-collapsed.png" height="56">
+  &nbsp;&nbsp;
+  <img alt="button expanded" src="https://raw.githubusercontent.com/hoyyang/dsh-plan-board/main/assets/button-expanded.png" height="56">
+</p>
+
 ## 它解决什么问题
 
 Agent 跑偏不是「不听话」，是**没有可执行的计划权威**：计划活在对话里，压缩一次就没了；任务做到哪一步没人知道；说「做完了」也没有证据；改计划不留痕。dsh-plan-board 把计划变成项目里的一份**机器权威文件**（`<项目>/.plan-board/plan.board.json`），再用七层机制让 Agent 只能顺着它走。

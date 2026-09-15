@@ -11,6 +11,14 @@
     "cordis.patch.yml"
   ],
   "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoyyang/dsh-plan-board.git"
+  },
+  "homepage": "https://github.com/hoyyang/dsh-plan-board#readme",
+  "bugs": {
+    "url": "https://github.com/hoyyang/dsh-plan-board/issues"
+  },
   "peerDependencies": {
     "@deepseek-ai/dsh-llm": ">=0.0.1-rc <2",
     "@deepseek-ai/dsh-tools": ">=0.0.1-rc <2",

@@ -23,6 +23,21 @@ dsh plugin --profile web remove @dsh-external/dsh-plan-board   # uninstall
 
 Requires `dsh >= 0.1.5-rc.1`. Zero configuration — no API key; all plan data lives inside your own project directory.
 
+## What it looks like
+
+<p align="center">
+  <img alt="plan board panel" src="https://raw.githubusercontent.com/hoyyang/dsh-plan-board/main/assets/panel.png" width="420">
+</p>
+
+- **Panel** (561×720): plan → module → task tree; dashed violet lines are dependencies; the `#N` badge is the topological execution order; green means done. The top banner is an L7 scope denial, the bottom is the live event timeline (`status_changed` / `human_edit` / `guard_alert` — everything leaves a trace).
+- **Header button**: rests as a 31×31 rounded square (left) and expands leftwards into a full pill on hover (right) — the right edge stays pinned and the neighbouring "⋯" menu never moves.
+
+<p align="center">
+  <img alt="button collapsed" src="https://raw.githubusercontent.com/hoyyang/dsh-plan-board/main/assets/button-collapsed.png" height="56">
+  &nbsp;&nbsp;
+  <img alt="button expanded" src="https://raw.githubusercontent.com/hoyyang/dsh-plan-board/main/assets/button-expanded.png" height="56">
+</p>
+
 ## The problem
 
 Agents do not drift out of disobedience; they drift because there is **no executable source of truth for the plan**. The plan lives in the conversation and dies at the first context compaction; nobody knows which task is in flight; "done" comes with no evidence; plan edits leave no trace. dsh-plan-board materialises the plan as a file the agent must obey — `<project>/.plan-board/plan.board.json`.
