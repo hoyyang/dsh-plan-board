@@ -79,6 +79,7 @@ Agents do not drift out of disobedience; they drift because there is **no execut
 ## Development
 
 ```sh
+npm install                      # local devDependencies (tsdown, …)
 bash scripts/build.sh            # host: tsc → lib/
 npm run build:client             # client: tsdown bundle of the panel
 ```

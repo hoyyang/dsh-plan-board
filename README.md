@@ -87,6 +87,7 @@ Agent 跑偏不是「不听话」，是**没有可执行的计划权威**：计�
 ## 开发
 
 ```sh
+npm install                      # 取本地 devDependencies（tsdown 等）
 bash scripts/build.sh            # host：tsc 编译到 lib/（自动探测 DSH_CHECKOUT 或 npm 安装的 dsh）
 npm run build:client             # client：tsdown 编译面板（react 为 external）
 bash /path/to/dsh-plugin-build/scripts/boot-check.sh web   # 冷启动三故障静态检测
