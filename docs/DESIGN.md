@@ -68,7 +68,7 @@
 
 - **0A 增量扫描结论**：生态内没有可装的「收起/展开胶囊」插件（沿用 2026-09-11 的「借鉴改造」路线）；参照物 = 同槽位邻居 `@dsh-external/dsh-android-pane`（31px 胶囊基线，实测）、会话头部「⋯ 更多操作」（28px，右邻）、业界 `shadcnblocks Button Morph Expand` 系列与 CSS Grid `0fr/1fr` 补间手法（[transition on grid-template-columns fr](https://stackoverflow.com/questions/79198554/transition-on-grid-template-columns-fr-to-px-value)、[smooth hover transitions with grid/flex](https://www.devgem.io/posts/creating-smooth-hover-transitions-with-css-grid-and-flexbox)）。
 - **选型**：**不用** grid `0fr`（label 是固定短词，量一次宽度更准），改为「JS 量 `.pb-label` 的 `offsetWidth` → 写 `--pb-lw` → 裁剪容器 `max-width: 0 ⇄ var(--pb-lw)` 过渡」，与 padding / margin-left / border-radius / 状态点宽度一起补间（`cubic-bezier(.22,1,.36,1)` 420ms）。量宽的巧妙点：裁剪容器 `max-width:0` 时内部 inline-block 仍按自然宽度布局，`offsetWidth` 读得到真实文字宽 → 补间**全程都在动**，没有「先空转后跳变」的死区。
-- **几何**：静止 31×31（padding 5.5 + border 1 + 图标 18）、radius 11px；展开 padding `0 12px 0 10px`、radius 15.5px。
+- **几何**：静止 31×31（padding 5.5 + border 1 + 图标 18）；展开 padding `0 12px 0 10px`。**圆角两态同为 15.5px（= 高度一半）** —— 2026-09-16 用户实测截图指出「收起 11px / 展开 15.5px 弧度不一致」，已统一：收起为**正圆**、展开为胶囊，弧度全程不动（隔离 harness 复测：collapsed 31×31 r15.5 / expanded 125×31 r15.5，sameRadius=true）。
 - **右缘固定的实现依据**：`.wSkVaW_headerUtilities{display:flex;gap:8px}`，按钮是流内 flex item，右邻是含「⋯」与删除会话的 wrapper → 实测 collapsed/expanded 的 `right` **均为 1160**、「⋯」的 x **恒为 1168**、两者间距**恒 8px**；展开时左邻「Android 面板」x 978 → 882 平滑让位（预期副作用）。
 - `transform-origin:100% 50%`：让 hover 的 `scale(1.05)` 只向左生长（修前 right 会被推 1160→1163）。
 - **收起态的状态语义**：状态点宽度归零让位给**图标光晕颜色**（`--pb-stat` 由 `data-stat` 切换，SVG `<stop class="pb-halo-stop">` 用 `stop-color:var(--pb-stat)` 接管），标题与 aria-label 仍带完整状态文案。

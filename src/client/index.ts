@@ -116,9 +116,10 @@ const CSS = [
   // 收起/展开：本按钮在 headerUtilities 里是流内 flex item（右邻「⋯ 更多操作」保持 8px 槽位间距），
   // 因此宽度变化只会向左生长——右缘天然固定，邻居变化时实时重排。
   '.pb-entry{--pb-ease:cubic-bezier(.22,1,.36,1);--pb-dur:.42s;--pb-stat:#a855f7;',
-  // 收起时 5.5px 内边距 + 1px 边框 = 31×31 整（与高度相等，才是正方形）
+  // 收起时 5.5px 内边距 + 1px 边框 = 31×31 整；圆角与展开态同值 15.5px（= 高度/2）：
+  // 31×31 上即正圆，展开成胶囊时弧度完全连续，不会出现「方角 → 胶囊」的弧度跳变（用户 2026-09-16 要求统一）。
   'position:relative;display:inline-flex;align-items:center;gap:0;box-sizing:border-box;height:31px;padding:0 5.5px;',
-  'border-radius:11px;cursor:pointer;overflow:hidden;user-select:none;vertical-align:middle;line-height:1;',
+  'border-radius:15.5px;cursor:pointer;overflow:hidden;user-select:none;vertical-align:middle;line-height:1;',
   'font-size:12.5px;font-weight:600;letter-spacing:.2px;color:#f3f7ff;border:1px solid transparent;',
   'background:linear-gradient(135deg,#080b14 0%,#0b0918 55%,#120a20 100%) padding-box,linear-gradient(112deg,#22d3ee 0%,#38bdf8 24%,#8b5cf6 58%,#e879f9 100%) border-box;',
   'box-shadow:0 0 0 1px rgba(139,92,246,.20),0 2px 12px rgba(56,189,248,.30),0 2px 18px rgba(232,121,249,.24),inset 0 0 14px rgba(124,58,237,.35),inset 0 1px 0 rgba(255,255,255,.07);',
@@ -172,12 +173,12 @@ const CSS = [
   '.pb-entry .pb-dot.pb-block{background:#ef4444;box-shadow:0 0 9px rgba(239,68,68,.85);animation:pb-dot 1.1s ease-in-out infinite}',
   '@keyframes pb-dot{0%,100%{opacity:1}50%{opacity:.45}}',
   '.pb-entry .pb-dot.pb-none{background:#94a3b8;opacity:.55}',
-  // 展开态（悬停 / 键盘聚焦 / 面板开启）：padding 与圆角一起过渡成完整胶囊。
-  // 圆角用 15.5px（= 高度/2，31px 盒子的胶囊半径），与邻居的 999px 渲染结果完全一致，
-  // 但能真正参与补间——999px 会因为"超过半高即被 clamp"而在动画最后一帧才跳变。
-  // 悬停不再放大缩小（用户 2026-09-15 要求去掉）：只保留 1.5px 上浮 + 提亮 + 辉光，
-  // 让"收起/展开"成为唯一的形变动效，避免两种缩放叠加。
-  '.pb-entry:hover,.pb-entry:focus-visible,.pb-entry.pb-on{padding:0 12px 0 10px;border-radius:15.5px;transform:translateY(-1.5px);filter:brightness(1.12);',
+  // 展开态（悬停 / 键盘聚焦 / 面板开启）：只改 padding（宽度随内容生长）+ 上浮/提亮 + 辉光。
+  // 圆角两态同为 15.5px（= 高度/2，渲染结果与邻居的 999px 一致）：收起=正圆、展开=胶囊，
+  // 弧度全程不动 —— 既没有「方角 → 胶囊」的跳变，也没有 999px 那种"超过半高即被 clamp、
+  // 补间尾帧才突变"的问题（用户 2026-09-16 要求两态弧度统一）。
+  // 悬停不再放大缩小（用户 2026-09-15 要求去掉）：避免与收起/展开的形变动效叠加。
+  '.pb-entry:hover,.pb-entry:focus-visible,.pb-entry.pb-on{padding:0 12px 0 10px;transform:translateY(-1.5px);filter:brightness(1.12);',
   'box-shadow:0 0 0 1px rgba(168,85,247,.45),0 6px 26px rgba(124,58,237,.55),0 0 26px rgba(56,189,248,.40),0 0 30px rgba(232,121,249,.32),inset 0 0 18px rgba(124,58,237,.45)}',
   '.pb-entry:active{transform:translateY(0);transition-duration:.06s;',
   'box-shadow:0 1px 6px rgba(99,102,241,.4),inset 0 1px 0 rgba(255,255,255,.12)}',

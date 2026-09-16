@@ -37,7 +37,7 @@ dsh plugin --profile web remove @dsh-external/dsh-plan-board   # 卸载
 </p>
 
 - **左**：面板（561×720）——计划 → 模块 → 任务三层思维导图，模块间紫色虚线是依赖，任务前的 `#N` 是拓扑执行序号，绿色=done；顶部横幅是 L7 越界拦截，底部是事件时间线（`status_changed` / `human_edit` / `guard_alert` 全量留痕）。
-- **入口按钮**：静止收成 31×31 圆角方形（左），悬停向左展开成完整胶囊（右）——右缘固定，右邻「⋯ 更多操作」不动。
+- **入口按钮**：静止收成 31×31 正圆（左），悬停向左展开成完整胶囊（右）——两态圆角同为 15.5px（= 高度一半），所以弧度全程不变；右缘固定，右邻「⋯ 更多操作」不动。
 
 <p align="center">
   <img alt="button collapsed" src="https://raw.githubusercontent.com/hoyyang/dsh-plan-board/main/assets/button-collapsed.png" height="56">
@@ -78,7 +78,7 @@ Agent 跑偏不是「不听话」，是**没有可执行的计划权威**：计�
 - **保存门控**：面板上的一切改动先进草稿态（横幅显示「N 项未保存更改」），点「保存更改」才批量 `POST /edit` 落盘并记 `human_edit` 事件；点「放弃」全部回滚。保存前客户端预检环依赖，服务端 lint 兜底；status 不在面板直改（状态流转只走 task_update 的证据门）。
 - **模块级依赖真的算数（v0.2.0）**：写在模块上的依赖会向下冒泡到它的子任务——「大任务3 依赖 大任务2」会真正卡住小任务3-1 的发号。模块在「自身 done」或「名下任务全部 done/canceled」时算完成；空模块不自动完成；声明无环但冒泡后成环的死锁会在提交时被 lint 拒绝。
 - **实时刷新**：`/stream` NDJSON 推送 + 4s 轮询兜底；待批 diff、漂移横幅、拦截横幅、事件时间线全部实时。
-- **入口按钮（会话头部）**：静止时收成 31×31 圆角方形只留银河图标，悬停/键盘聚焦/面板开启时向左展开成完整胶囊（右缘固定，邻居平滑让位）；状态点每 15s 轮询 `GET /state`：青=无进行中 · 琥珀=N 个进行中 · 红=漂移阻断或阻塞 · 灰=未设置路径；收起态由图标光晕颜色继续传达状态。深浅主题同款，`aria-pressed` / `focus-visible` / `prefers-reduced-motion` 齐备。
+- **入口按钮（会话头部）**：静止时收成 31×31 正圆只留银河图标，悬停/键盘聚焦/面板开启时向左展开成完整胶囊（两态圆角同为 15.5px，弧度不跳变；右缘固定，邻居平滑让位）；状态点每 15s 轮询 `GET /state`：青=无进行中 · 琥珀=N 个进行中 · 红=漂移阻断或阻塞 · 灰=未设置路径；收起态由图标光晕颜色继续传达状态。深浅主题同款，`aria-pressed` / `focus-visible` / `prefers-reduced-motion` 齐备。
 - **存储**：`<项目>/.plan-board/` 三件套——`plan.board.json`（机器权威，乐观锁 version + SHA-256 digest）、`events.jsonl`（只追加审计流）、`ROADMAP.md`（人读镜像）；加上 `memory.link.json` 与 `~/.ai` 的对账指针。全进 git。
 - **~/.ai 强关联**：`plan_link push/pull` 经 `ai-memory` 读写项目记忆，规划记录与叙述性记忆互为索引。
 

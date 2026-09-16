@@ -30,7 +30,7 @@ Requires `dsh >= 0.1.5-rc.1`. Zero configuration — no API key; all plan data l
 </p>
 
 - **Panel** (561×720): plan → module → task tree; dashed violet lines are dependencies; the `#N` badge is the topological execution order; green means done. The top banner is an L7 scope denial, the bottom is the live event timeline (`status_changed` / `human_edit` / `guard_alert` — everything leaves a trace).
-- **Header button**: rests as a 31×31 rounded square (left) and expands leftwards into a full pill on hover (right) — the right edge stays pinned and the neighbouring "⋯" menu never moves.
+- **Header button**: rests as a 31×31 circle (left) and expands leftwards into a full pill on hover (right) — both states share the same 15.5px corner radius (= half the height), so the curvature never changes; the right edge stays pinned and the neighbouring "⋯" menu never moves.
 
 <p align="center">
   <img alt="button collapsed" src="https://raw.githubusercontent.com/hoyyang/dsh-plan-board/main/assets/button-collapsed.png" height="56">
@@ -71,7 +71,7 @@ Agents do not drift out of disobedience; they drift because there is **no execut
 - **Save gating** — every panel change is a draft (banner shows "N unsaved changes"); only "Save" batch-posts `/edit` and records a `human_edit` event; "Discard" rolls everything back. Cycles are rejected client-side first and server-side by lint. Status is never edited in the panel.
 - **Module dependencies really count (v0.2.0)** — a dependency declared on a module bubbles down to its subtasks, so "big task 3 depends on big task 2" genuinely blocks task 3-1. A module completes when it is explicitly `done` or all of its tasks are done/canceled; empty modules never auto-complete; deadlocks that only appear after bubbling are rejected by lint.
 - **Live updates** — `/stream` NDJSON push plus a 4s polling fallback for pending diffs, drift/deny banners and the event timeline.
-- **Header button** — rests as a 31×31 rounded square showing only the galaxy icon, and expands leftwards into a full pill on hover, keyboard focus or while the panel is open (right edge pinned, neighbours glide out of the way). A status dot polls `GET /state` every 15s (cyan = idle, amber = N in progress, red = drift/blocked, grey = unset); in the collapsed state the icon's halo colour carries that signal. Both themes, `aria-pressed`, `focus-visible`, `prefers-reduced-motion`.
+- **Header button** — rests as a 31×31 circle showing only the galaxy icon, and expands leftwards into a full pill on hover, keyboard focus or while the panel is open (same 15.5px radius in both states) (right edge pinned, neighbours glide out of the way). A status dot polls `GET /state` every 15s (cyan = idle, amber = N in progress, red = drift/blocked, grey = unset); in the collapsed state the icon's halo colour carries that signal. Both themes, `aria-pressed`, `focus-visible`, `prefers-reduced-motion`.
 - **Storage** — `<project>/.plan-board/`: `plan.board.json` (machine authority, optimistic `version` + SHA-256 digest), `events.jsonl` (append-only audit), `ROADMAP.md` (human-readable mirror), plus `memory.link.json` for the `~/.ai` pointer. All committed to git.
 
 ## Authority
