@@ -2,6 +2,11 @@
 
 本插件遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 与语义化版本。
 
+## [0.2.2] - 2026-09-16
+
+### Fixed
+- **入口按钮槽位 order 撞车修复**：header.utilities 注册 order 由 -1 改为 **-0.5**（升序槽位下的唯一插值：落在 android-pane(-1) 之右、SLog(0)/delete(1) 之左）。v0.2.0 从 android-pane 克隆注册骨架时复制了同值 order:-1，与 @dsh-external/dsh-android-pane 同槽同值，渲染顺序退化为「谁最后 reload 谁靠右」，两按钮随任一方热重载乒乓换位（09-16 12:55/12:57/17:04/18:00 四次实录）。改值后位置由 order 梯队固化，不再随 reload 翻面；终点态 = 设计基准 [billing(-2)][Android(-1)][PlanBoard(-0.5)]，PlanBoard 右缘回到 1160px 锚位。
+
 ## [0.2.1] - 2026-09-16
 
 ### Fixed

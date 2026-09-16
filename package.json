@@ -1,6 +1,6 @@
 {
   "name": "@dsh-external/dsh-plan-board",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "思维导图式项目规划可视 + 最强防跑偏：计划→模块→任务树/DAG、执行序号、Agent GPS 站位、改图人审门、git 交叉核对、阻断级漂移防护",
   "private": true,
   "type": "module",

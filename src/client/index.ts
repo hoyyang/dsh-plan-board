@@ -822,6 +822,8 @@ export function apply(ctx: SlotsCtx): void {
     ctx.slots.inject('shell.overlay', () =>
       ctx.slots.register({ name: 'shell.overlay', id: NS + ':pane', order: 85 }, PaneWindow as unknown as (props: never) => unknown))
     ctx.slots.inject('conversation.session.header.utilities', () =>
-      ctx.slots.register({ name: 'conversation.session.header.utilities', id: NS + ':entry', order: -1 }, PaneSidebarButton as unknown as (props: never) => unknown))
+      // 槽位 order 梯队（升序，勿与他插件撞值）：billing -2 → android-pane -1 → 本插件 -0.5 → SLog 0 → delete 1。
+      // v0.2.0 曾克隆 android-pane 骨架连 -1 一起复制，同槽同值导致「谁最后 reload 谁靠右」乒乓换位（09-16 四次实录）。
+      ctx.slots.register({ name: 'conversation.session.header.utilities', id: NS + ':entry', order: -0.5 }, PaneSidebarButton as unknown as (props: never) => unknown))
   }, NS + ':ui')
 }
