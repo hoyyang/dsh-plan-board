@@ -1,6 +1,6 @@
 # DESIGN: dsh-plan-board — 设计卡 v2（定稿基线）
 
-> 本文件自 hyperaitools 会话记忆迁入插件 docs/（任务归属 ~/Desktop/DSH）。
+> 本文件自 hyperaitools 会话记忆迁入插件 docs/（任务归属 DSH 工作区）。
 > 完整内容见会话记录与 ctx_notes；此处为验收基线摘要。
 
 ## 定位
